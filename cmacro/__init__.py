@@ -3,7 +3,7 @@
 """
 It was supposed to be a joke like cursed code but it went to an actual (unfinished) library lol
 
-What actually interests you is the macro() function that can run C code directly in your Python file :flushed:
+What actually interests you is the macro() function that can run C code directly in your Python file 😳️
 
 Coming soon: I've planned to add some locals grabbing so you would be able to use Python variables in C code.
 
@@ -26,6 +26,8 @@ from typing import Any
 
 
 _C_EXT = '.c'
+_O_EXT = '.o'
+_SO_EXT = '.so'
 
 DEFAULT_LOG_FILE: str = "cmp_log.txt"
 
@@ -94,11 +96,11 @@ def generate_object_file(cfile_path: str, logs: str | None = None) -> str:
 
         raise SyntaxError(error_message)
     else:
-        return os.path.abspath(cfile_path.removesuffix('.c') + '.o')
+        return os.path.abspath(cfile_path.removesuffix(_C_EXT) + _O_EXT)
 
 
 def _so_name_from_obj(objfile_path: str) -> str:
-    return f"lib{objfile_path.split('/')[-1].removesuffix('.o')}1"
+    return f"lib{objfile_path.split('/')[-1].removesuffix(_O_EXT)}1"
 
 
 def generate_shared_library(objfile_path: str, shared_lib_name: str | None = None) -> str:
@@ -120,7 +122,7 @@ def generate_shared_library(objfile_path: str, shared_lib_name: str | None = Non
     if not isinstance(shared_lib_name, str):
         raise TypeError("shared library name must be a string")
 
-    shared_lib_name += '.so'
+    shared_lib_name += _SO_EXT
 
     shared_library_gencmd: str = f"gcc -shared -o {shared_lib_name} {objfile_path}"
 
