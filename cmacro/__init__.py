@@ -100,7 +100,7 @@ def generate_object_file(cfile_path: str, logs: str | None = None) -> str:
 
 
 def _so_name_from_obj(objfile_path: str) -> str:
-    return f"lib{objfile_path.split('/')[-1].removesuffix(_O_EXT)}1"
+    return f"lib{objfile_path.split(os.sep)[-1].removesuffix(_O_EXT)}1"
 
 
 def generate_shared_library(objfile_path: str, shared_lib_name: str | None = None) -> str:
